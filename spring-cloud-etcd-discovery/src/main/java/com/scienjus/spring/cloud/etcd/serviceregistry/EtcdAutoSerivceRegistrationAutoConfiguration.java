@@ -25,7 +25,7 @@ public class EtcdAutoSerivceRegistrationAutoConfiguration {
             String ipAddress = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
             properties.setAddress(ipAddress);
         }
-        return new EtcdRegistration(properties.getName(), properties.getAddress(), properties.getPort());
+        return new EtcdRegistration(properties.getName(), properties.getAddress(), properties.getPort(), null);
     }
 
     @Bean

@@ -5,10 +5,10 @@ import com.coreos.jetcd.ClientBuilder;
 import com.coreos.jetcd.data.ByteSequence;
 import com.scienjus.spring.cloud.etcd.properties.EtcdProperties;
 
-import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 // import org.springframework.boot.actuate.autoconfigure.ConditionalOnEnabledHealthIndicator;
 // import org.springframework.boot.actuate.condition.ConditionalOnEnabledEndpoint;
 // import org.springframework.boot.actuate.endpoint.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

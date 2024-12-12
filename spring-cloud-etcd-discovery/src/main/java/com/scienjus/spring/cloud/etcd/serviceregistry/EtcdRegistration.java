@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.cloud.client.serviceregistry.Registration;
@@ -13,10 +15,9 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 public class EtcdRegistration implements Registration {
 
     private String serviceName;
-
     private String address;
-
     private int port;
+    private Map<String, String> metadata;
 
     @Override
     public String getServiceId() {
@@ -33,26 +34,25 @@ public class EtcdRegistration implements Registration {
 
     @Override
     public String getHost() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHost'");
+        return address;
     }
 
     @Override
     public boolean isSecure() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isSecure'");
+        return port == 443;
     }
 
     @Override
     public URI getUri() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUri'");
+        try {
+            return new URI("http", null, address, port, null, null, null);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Invalid URI", e);
+        }
     }
 
     @Override
     public Map<String, String> getMetadata() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMetadata'");
+        return metadata != null ? metadata : new HashMap<>();
     }
-
 }

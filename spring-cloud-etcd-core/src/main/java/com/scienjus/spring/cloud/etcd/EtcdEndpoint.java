@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -15,20 +16,21 @@ import java.util.stream.Collectors;
 
 /**
  * {@link Endpoint} to report etcd cluster information.
- *
+ * 
  * @author ScienJus
  */
+@Component
 @Endpoint(id = "etcd")
 public class EtcdEndpoint {
 
     private final Client etcdClient;
-
     private final EtcdProperties etcdProperties;
 
     public EtcdEndpoint(Client etcdClient, EtcdProperties etcdProperties) {
         this.etcdClient = etcdClient;
         this.etcdProperties = etcdProperties;
     }
+
     @ReadOperation
     public EtcdStatus invoke() {
         List<EtcdMemberStatus> memberStatuses = etcdProperties.getEndpoints()
@@ -49,7 +51,6 @@ public class EtcdEndpoint {
     @NoArgsConstructor
     @AllArgsConstructor
     static class EtcdStatus {
-
         private List<EtcdMemberStatus> members;
     }
 
@@ -57,9 +58,7 @@ public class EtcdEndpoint {
     @NoArgsConstructor
     @AllArgsConstructor
     static class EtcdMemberStatus {
-
         private String endpoint;
-
         private String version;
     }
 }
