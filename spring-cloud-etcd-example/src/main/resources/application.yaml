@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    etcd:
+      endpoints: http://ali.pecs.cn:32379
+      prefix: /springcloud
+      username: username
+      password: password
+
+# 也可以指定服务发现的地址
+# spring.cloud.etcd.discovery

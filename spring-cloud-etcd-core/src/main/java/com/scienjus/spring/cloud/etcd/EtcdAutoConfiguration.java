@@ -1,6 +1,8 @@
 package com.scienjus.spring.cloud.etcd;
 
 import com.coreos.jetcd.Client;
+import com.coreos.jetcd.ClientBuilder;
+import com.coreos.jetcd.data.ByteSequence;
 import com.scienjus.spring.cloud.etcd.properties.EtcdProperties;
 import org.springframework.boot.actuate.autoconfigure.ConditionalOnEnabledHealthIndicator;
 import org.springframework.boot.actuate.condition.ConditionalOnEnabledEndpoint;
@@ -25,9 +27,18 @@ public class EtcdAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(Client.class)
     public Client etcdClient(EtcdProperties properties) {
-        return Client.builder()
-                .endpoints(properties.getEndpoints())
-                .build();
+        ClientBuilder clientBuilder = Client.builder()
+                .endpoints(properties.getEndpoints());
+
+        if (properties.getUsername() != null) {
+            clientBuilder.user(ByteSequence.fromBytes(properties.getUsername().getBytes()));
+        }
+
+        if (properties.getPassword() != null) {
+            clientBuilder.password(ByteSequence.fromBytes(properties.getPassword().getBytes()));
+        }
+
+        return clientBuilder.build();
     }
 
     @Configuration

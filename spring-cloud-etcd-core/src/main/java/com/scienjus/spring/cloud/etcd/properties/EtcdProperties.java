@@ -18,4 +18,8 @@ import static java.util.Collections.singletonList;
 public class EtcdProperties {
 
     private List<String> endpoints = new ArrayList<>(singletonList("http://127.0.0.1:2379"));
+    private String username;
+    private String password;
+    private String prefix;
+
 }
