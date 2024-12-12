@@ -6,8 +6,8 @@ import com.scienjus.spring.cloud.etcd.properties.EtcdProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
-import org.springframework.boot.actuate.endpoint.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -18,19 +18,18 @@ import java.util.stream.Collectors;
  *
  * @author ScienJus
  */
-public class EtcdEndpoint extends AbstractEndpoint<EtcdEndpoint.EtcdStatus> {
+@Endpoint(id = "etcd")
+public class EtcdEndpoint {
 
     private final Client etcdClient;
 
     private final EtcdProperties etcdProperties;
 
     public EtcdEndpoint(Client etcdClient, EtcdProperties etcdProperties) {
-        super("etcd", true, true);
         this.etcdClient = etcdClient;
         this.etcdProperties = etcdProperties;
     }
-
-    @Override
+    @ReadOperation
     public EtcdStatus invoke() {
         List<EtcdMemberStatus> memberStatuses = etcdProperties.getEndpoints()
                 .stream()

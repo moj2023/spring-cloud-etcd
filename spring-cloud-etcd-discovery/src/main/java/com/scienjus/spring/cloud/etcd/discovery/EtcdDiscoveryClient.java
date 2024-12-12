@@ -35,7 +35,6 @@ public class EtcdDiscoveryClient implements DiscoveryClient {
         return "Spring Cloud Etcd Discovery Client";
     }
 
-    @Override
     public ServiceInstance getLocalServiceInstance() {
         return new DefaultServiceInstance(properties.getName(), properties.getAddress(), properties.getPort(), false);
     }

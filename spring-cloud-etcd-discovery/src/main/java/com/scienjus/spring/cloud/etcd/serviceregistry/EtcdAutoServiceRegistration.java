@@ -3,7 +3,6 @@ package com.scienjus.spring.cloud.etcd.serviceregistry;
 import org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
 
-import java.util.Optional;
 
 public class EtcdAutoServiceRegistration extends AbstractAutoServiceRegistration<EtcdRegistration> {
 
@@ -25,16 +24,16 @@ public class EtcdAutoServiceRegistration extends AbstractAutoServiceRegistration
         return null;
     }
 
-    @Override
-    protected int getConfiguredPort() {
-        return Optional.ofNullable(registration.getPort()).orElse(0);
-    }
+    // @Override
+    // protected int getConfiguredPort() {
+    //     return Optional.ofNullable(registration.getPort()).orElse(0);
+    // }
 
-    @Override
-    protected void setConfiguredPort(int port) {
-        // do nothing
-        registration.setPort(port);
-    }
+    // @Override
+    // protected void setConfiguredPort(int port) {
+    //     // do nothing
+    //     registration.setPort(port);
+    // }
 
     @Override
     protected Object getConfiguration() {

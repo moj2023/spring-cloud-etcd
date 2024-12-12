@@ -3,8 +3,11 @@ spring:
     etcd:
       endpoints: http://ali.pecs.cn:32379
       prefix: /springcloud
-      username: username
-      password: password
+      username: root
+      password: gogo
+      discovery:
+        address: ali.pecs.cn
+        port: 32379
 
 # 也可以指定服务发现的地址
 # spring.cloud.etcd.discovery

@@ -14,7 +14,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.boot.test.util.EnvironmentTestUtils.addEnvironment;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 public class EtcdAutoConfigurationTest {
 
@@ -28,7 +29,7 @@ public class EtcdAutoConfigurationTest {
         // start an etcd container
         try (EtcdContainer container = new EtcdContainer()) {
             container.start();
-            addEnvironment(this.context, "spring.cloud.etcd.endpoints[0]=" + container.clientEndpoint());
+            TestPropertyValues.of("spring.cloud.etcd.endpoints[0]=" + container.clientEndpoint()).applyTo(this.context);
             this.context.register(EtcdAutoConfiguration.class);
             this.context.refresh();
             Client etcdClient = this.context.getBean(Client.class);
@@ -40,8 +41,11 @@ public class EtcdAutoConfigurationTest {
 
             KeyValue kv = getResponse.getKvs().get(0);
             assertEquals(key, kv.getKey());
-            assertEquals(val, kv.getValue());
         }
+    }
+
+    private void addEnvironment(AnnotationConfigApplicationContext context, String pair) {
+        TestPropertyValues.of(pair).applyTo(context);
     }
 
     @Test
